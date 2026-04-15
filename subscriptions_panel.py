@@ -136,6 +136,25 @@ class DatePicker(tk.Frame):
                   bg=HDR, fg=COLORS['gold'], relief='flat',
                   font=('Calibri', 11), cursor='hand2', bd=0, padx=8).pack(side='right')
 
+        tk.Button(nav, text='◀◀', command=lambda: _shift_year(-1),
+                  bg=HDR, fg=COLORS['text_muted'], relief='flat',
+                  font=('Calibri', 8), cursor='hand2', bd=0, padx=6).pack(side='left')
+        tk.Button(nav, text='◀', command=lambda: _shift_month(-1),
+                  bg=HDR, fg=COLORS['gold'], relief='flat',
+                  font=('Calibri', 11), cursor='hand2', bd=0, padx=8).pack(side='left')
+
+        hdr_lbl = tk.Label(nav, text='', bg=HDR, fg=COLORS['gold'],
+                           font=FONTS['body_bold'], width=14, anchor='center')
+        hdr_lbl.pack(side='left', expand=True)
+
+        # RIGHT: pack ▶▶ first (rightmost), then ▶ → displays as "▶ месец  ▶▶ година"
+        tk.Button(nav, text='▶▶', command=lambda: _shift_year(1),
+                  bg=HDR, fg=COLORS['text_muted'], relief='flat',
+                  font=('Calibri', 8), cursor='hand2', bd=0, padx=6).pack(side='right')
+        tk.Button(nav, text='▶', command=lambda: _shift_month(1),
+                  bg=HDR, fg=COLORS['gold'], relief='flat',
+                  font=('Calibri', 11), cursor='hand2', bd=0, padx=8).pack(side='right')
+
         # ── fixed canvas ──────────────────────────────────────
         COLS = 7
         ROWS = 7   # 1 header + 6 week rows max
