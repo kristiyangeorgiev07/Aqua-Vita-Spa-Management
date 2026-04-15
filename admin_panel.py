@@ -137,6 +137,15 @@ class AdminPanel(tk.Frame):
              str(plan['visits_limit']) if plan and plan['visits_limit'] else ''),
         ]
 
+        fields = [
+            ('Наименование *', 'name', plan['name'] if plan else ''),
+            ('Описание', 'desc', plan['description'] if plan else ''),
+            ('Продължителност (дни) *', 'days', str(plan['duration_days']) if plan else '30'),
+            ('Цена (€) *', 'price', str(plan['price']) if plan else ''),
+            ('Лимит посещения (празно = неограничени)', 'visits',
+             str(plan['visits_limit']) if plan and plan['visits_limit'] else ''),
+        ]
+
         vars_ = {}
         for label, key, default in fields:
             row = tk.Frame(form, bg=COLORS['bg_medium'])
