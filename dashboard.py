@@ -76,14 +76,6 @@ class Dashboard(tk.Frame):
             height=10,
         )
 
-        self.visits_tree = StyledTreeview(
-            left,
-            columns=('datetime', 'client', 'plan', 'registered_by'),
-            headings=('Дата и час', 'Клиент', 'Абонамент', 'Регистрирал'),
-            col_widths=[130, 180, 150, 130],
-            height=10,
-        )
-
         self.visits_tree.pack(fill='both', expand=True)
 
         # Right: expiring subs
