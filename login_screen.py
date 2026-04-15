@@ -54,6 +54,14 @@ class LoginScreen(tk.Frame):
             '⟡  Клиентски досиета',
             '⟡  Административен панел',
         ]
+
+        features = [
+            '⟡  Управление на абонаменти',
+            '⟡  Регистрация на посещения',
+            '⟡  Клиентски досиета',
+            '⟡  Административен панел',
+        ]
+
         for feat in features:
             tk.Label(left, text=feat, bg=COLORS['bg_medium'],
                      fg=COLORS['text_secondary'], font=('Calibri', 10),
