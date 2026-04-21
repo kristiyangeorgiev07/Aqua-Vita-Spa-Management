@@ -16,8 +16,17 @@ class LoginScreen(tk.Frame):
     def _build(self):
         self.pack(fill='both', expand=True)
 
-        # Minimal top bar with close button
-        topbar = tk.Frame(self, bg=COLORS['bg_dark'], pady=4)
+        # Left decorative panel — packed FIRST so it fills full height incl. top
+        left = tk.Frame(self, bg=COLORS['bg_medium'], width=320)
+        left.pack(side='left', fill='y')
+        left.pack_propagate(False)
+
+        # Right container holds the topbar + login form
+        right_wrap = tk.Frame(self, bg=COLORS['bg_dark'])
+        right_wrap.pack(side='left', fill='both', expand=True)
+
+        # Minimal top bar with close button (inside right_wrap only)
+        topbar = tk.Frame(right_wrap, bg=COLORS['bg_dark'], pady=4)
         topbar.pack(fill='x', side='top')
         tk.Button(topbar, text='✕  Изход', command=self._confirm_close,
                   bg=COLORS['bg_dark'], fg=COLORS['text_muted'],
@@ -26,18 +35,13 @@ class LoginScreen(tk.Frame):
                   activebackground=COLORS['danger'],
                   activeforeground='white').pack(side='right', padx=8)
 
-        # Left decorative panel
-        left = tk.Frame(self, bg=COLORS['bg_medium'], width=320)
-        left.pack(side='left', fill='y')
-        left.pack_propagate(False)
-
         # Decorative content on left
         tk.Frame(left, height=80, bg=COLORS['bg_medium']).pack()
-        
+
         # Logo/Brand area
         brand = tk.Frame(left, bg=COLORS['bg_medium'], padx=30)
         brand.pack(fill='x')
-        
+
         tk.Label(brand, text='✦', bg=COLORS['bg_medium'],
                  fg=COLORS['gold'], font=('Georgia', 40)).pack()
         tk.Label(brand, text='AQUA VITA', bg=COLORS['bg_medium'],
@@ -54,7 +58,6 @@ class LoginScreen(tk.Frame):
             '⟡  Клиентски досиета',
             '⟡  Административен панел',
         ]
-
         for feat in features:
             tk.Label(left, text=feat, bg=COLORS['bg_medium'],
                      fg=COLORS['text_secondary'], font=('Calibri', 10),
@@ -65,8 +68,8 @@ class LoginScreen(tk.Frame):
         tk.Label(left, text='Версия 1.0  ·  2026', bg=COLORS['bg_medium'],
                  fg=COLORS['text_muted'], font=('Calibri', 8)).pack()
 
-        # Right login panel
-        right = tk.Frame(self, bg=COLORS['bg_dark'])
+        # Right login panel (inside right_wrap)
+        right = tk.Frame(right_wrap, bg=COLORS['bg_dark'])
         right.pack(side='left', fill='both', expand=True)
 
         # Center the login form

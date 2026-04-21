@@ -60,7 +60,6 @@ class MainApp(tk.Tk):
         # Re-apply borderless when restored
         self.bind('<Map>', self._on_restore)
 
-
     def _on_restore(self, event=None):
         self.unbind('<Map>')
         self.overrideredirect(True)

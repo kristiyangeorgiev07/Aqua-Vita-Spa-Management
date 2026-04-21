@@ -75,7 +75,6 @@ class Dashboard(tk.Frame):
             col_widths=[130, 180, 150, 130],
             height=10,
         )
-
         self.visits_tree.pack(fill='both', expand=True)
 
         # Right: expiring subs

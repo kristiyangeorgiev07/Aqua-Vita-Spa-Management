@@ -252,9 +252,12 @@ class SubscriptionsPanel(tk.Frame):
         self._build()
 
     def _build(self):
-        # Filters card
-        fc = tk.Frame(self, bg=COLORS['bg_card'], padx=16, pady=12)
-        fc.pack(fill='x', padx=16, pady=(12, 0))
+        # Filters card — tighter padding on small screens
+        _sh = self.winfo_screenheight()
+        _fc_pady  = 6  if _sh <= 768 else 12
+        _fc_outer = (6, 0) if _sh <= 768 else (12, 0)
+        fc = tk.Frame(self, bg=COLORS['bg_card'], padx=16, pady=_fc_pady)
+        fc.pack(fill='x', padx=16, pady=_fc_outer)
 
         row = tk.Frame(fc, bg=COLORS['bg_card'])
         row.pack(fill='x')
@@ -300,11 +303,26 @@ class SubscriptionsPanel(tk.Frame):
 
         # Stats label
         self.stats_var = tk.StringVar(value='')
+        _stats_pady = (4, 0) if _sh <= 768 else (8, 0)
         tk.Label(fc, textvariable=self.stats_var, bg=COLORS['bg_card'],
-                 fg=COLORS['text_muted'], font=FONTS['small']).pack(anchor='w', pady=(8, 0))
+                 fg=COLORS['text_muted'], font=FONTS['small']).pack(anchor='w', pady=_stats_pady)
 
-        # Treeview
-        tf = tk.Frame(self, bg=COLORS['bg_dark'], padx=16, pady=10)
+        # Treeview — height adapts to screen resolution
+        screen_h = self.winfo_screenheight()
+        if screen_h <= 768:
+            tree_height = 10
+            tree_pady   = 4
+            ab_pady     = 4
+        elif screen_h <= 900:
+            tree_height = 13
+            tree_pady   = 6
+            ab_pady     = 6
+        else:
+            tree_height = 18
+            tree_pady   = 10
+            ab_pady     = 8
+
+        tf = tk.Frame(self, bg=COLORS['bg_dark'], padx=16, pady=tree_pady)
         tf.pack(fill='both', expand=True)
         self.sub_tree = StyledTreeview(
             tf,
@@ -313,13 +331,13 @@ class SubscriptionsPanel(tk.Frame):
             headings=('ID', 'Клиент', 'Телефон', 'Абонамент', 'Начало', 'Изтичане',
                       'Оставащи дни', 'Посещения', 'Статус', 'Продал'),
             col_widths=[48, 155, 110, 140, 95, 95, 95, 80, 85, 120],
-            height=18,
+            height=tree_height,
         )
         self.sub_tree.pack(fill='both', expand=True)
         self.sub_tree.tree.bind('<Double-1>', lambda e: self._print_receipt())
 
         # Action bar
-        ab = tk.Frame(self, bg=COLORS['bg_dark'], padx=16, pady=8)
+        ab = tk.Frame(self, bg=COLORS['bg_dark'], padx=16, pady=ab_pady)
         ab.pack(fill='x')
         if self.current_user['role'] == 'admin':
             make_button(ab, 'Отмени абонамент', command=self._cancel_sub,
